@@ -9791,7 +9791,7 @@ void prepare_move()
   set_current_to_destination();
 }
 
-void prepare_arc_move(char isclockwise) {
+void prepare_arc_move(bool isclockwise) {
     float r = hypot(offset[X_AXIS], offset[Y_AXIS]); // Compute arc radius for mc_arc
     // Trace the arc
     mc_arc(current_position, destination, offset, feedrate * feedmultiply * (1. / (60.f * 100.f)), r, isclockwise, active_extruder);

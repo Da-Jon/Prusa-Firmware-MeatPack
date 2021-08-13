@@ -24,9 +24,9 @@
 #include "stepper.h"
 #include "planner.h"
 
-// The arc is approximated by generating a huge number of tiny, linear segments. The length of each 
-// segment is configured in settings.mm_per_arc_segment.  
-void mc_arc(float* position, float* target, float* offset, float feed_rate, float radius, uint8_t isclockwise, uint8_t extruder)
+// The arc is approximated by generating a huge number of tiny, linear segments. The length of each
+// segment is configured in settings.mm_per_arc_segment.
+void mc_arc(float* position, float* target, float* offset, float feed_rate, float radius, bool isclockwise, uint8_t extruder)
 {
     float r_axis_x = -offset[X_AXIS];  // Radius vector from center to current location
     float r_axis_y = -offset[Y_AXIS];
@@ -86,7 +86,7 @@ void mc_arc(float* position, float* target, float* offset, float feed_rate, floa
     // calculating here
     const float millimeters_of_travel_arc = hypot(angular_travel_total * radius, fabs(travel_z));
     if (millimeters_of_travel_arc < 0.001) { return; }
-    
+
     // Calculate the number of arc segments
     uint16_t segments = static_cast<uint16_t>(ceil(millimeters_of_travel_arc / mm_per_arc_segment));
 
