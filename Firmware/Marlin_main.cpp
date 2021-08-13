@@ -9561,6 +9561,9 @@ Sigma_Exit:
 #endif //FILAMENT_SENSOR
 
 #endif //DEBUG_DCODES
+
+    default:
+        printf_P(PSTR("Unknown D code: %s\n"), cmdbuffer + bufindr + CMDHDRSIZE);
 	}
   }
 
