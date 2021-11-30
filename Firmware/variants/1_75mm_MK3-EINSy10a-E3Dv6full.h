@@ -139,6 +139,15 @@
 #define DEFAULT_SAFETYTIMER_TIME_MINS 30
 #define FARM_DEFAULT_SAFETYTIMER_TIME_ms (45*60*1000ul)
 
+// Offline crash dumper
+#define XFLASH_DUMP     // enable dump functionality (including D20/D21/D22)
+#define MENU_DUMP       // enable "Memory dump" in Settings menu
+#define EMERGENCY_DUMP  // trigger crash on stack corruption and WDR
+
+// Online crash dumper
+//#define EMERGENCY_SERIAL_DUMP   // Request dump via serial on stack corruption and WDR
+//#define MENU_SERIAL_DUMP        // Enable "Memory dump" in Settings menu
+
 // Filament sensor
 #define FILAMENT_SENSOR
 #define PAT9125
@@ -155,7 +164,9 @@
 #define MINTEMP_MINAMBIENT      10
 #define MINTEMP_MINAMBIENT_RAW  1002
 
+#define DEBUG_DCODE2
 #define DEBUG_DCODE3
+#define DEBUG_DCODE6
 
 //#define DEBUG_BUILD
 //#define DEBUG_SEC_LANG   //secondary language debug output at startup
@@ -591,6 +602,7 @@
 #define TEMP_SENSOR_AMBIENT 2000
 
 #define STACK_GUARD_TEST_VALUE 0xA2A2
+#define STACK_GUARD_MARGIN     32
 
 #define MAX_BED_TEMP_CALIBRATION 50
 #define MAX_HOTEND_TEMP_CALIBRATION 50
@@ -655,5 +667,17 @@
 #define MMU_DEBUG //print communication between MMU2 and printer on serial
 #define MMU_HAS_CUTTER
 #define MMU_IDLER_SENSOR_ATTEMPTS_NR 21 //max. number of attempts to load filament if first load failed; value for max bowden length and case when loading fails right at the beginning
+
+// Default Arc Interpolation Settings (Now configurable via M214)
+#define DEFAULT_N_ARC_CORRECTION       25 // Number of interpolated segments between corrections.
+/* A value of 1 or less for N_ARC_CORRECTION will trigger the use of Sin and Cos for every arc, which will improve accuracy at the
+   cost of performance*/
+#define DEFAULT_MM_PER_ARC_SEGMENT     1.0f // REQUIRED - The enforced maximum length of an arc segment
+#define DEFAULT_MIN_MM_PER_ARC_SEGMENT 0.5f //the enforced minimum length of an interpolated segment
+   /*  MIN_MM_PER_ARC_SEGMENT Must be smaller than MM_PER_ARC_SEGMENT.  Only has an effect if MIN_ARC_SEGMENTS > 0
+       or ARC_SEGMENTS_PER_SEC > 0 .  If both MIN_ARC_SEGMENTS and ARC_SEGMENTS_PER_SEC is defined, the minimum
+       calculated segment length is used. */
+#define DEFAULT_MIN_ARC_SEGMENTS 20 // The enforced minimum segments in a full circle of the same radius.  Set to 0 to disable
+#define DEFAULT_ARC_SEGMENTS_PER_SEC 0 // Use feedrate to choose segment length. Set to 0 to disable
 
 #endif //__CONFIGURATION_PRUSA_H
